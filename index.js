@@ -14,6 +14,9 @@ const render = require("./src/page-template.js");
 // Write Code to gather information about the development team members, and render the HTML file.
 // Pseudo-Code from Module 12 Office Hours with Dan. 
 
+const teamMembers = []
+
+
 inquirer.prompt([{
     //manager questions
     type: 'input',
@@ -37,8 +40,9 @@ inquirer.prompt([{
 }
 ]).then(managerResponse => {
     // populate manager info
-    let eManager = new Manager(managerResponse.name, managerResponse.id, managerResponse.email, managerResponse.officeNumber)
-    console.log(eManager)
+    let employee = new Manager(managerResponse.name, managerResponse.id, managerResponse.email, managerResponse.officeNumber)
+    teamMembers.push(employee)
+    console.log(teamMembers)
 
     // prompt for the next employee
     nextEmployee()
@@ -63,8 +67,10 @@ const nextEmployee = () => {
             addIntern()
         } else {
             // use the functionality from page-template to generate the team
-            // render() //CHECK THIS?
-
+            // render()
+            console.log(teamMembers)
+            console.log("finished")
+            // buildPage()
         }
     })
 }
@@ -94,9 +100,9 @@ const addEngineer = () => {
         }
     ]).then(engineerResponse => {
         // add new engineer to employees array
-        let eEngineer = new Engineer(engineerResponse.name, engineerResponse.id, engineerResponse.email, engineerResponse.github)
-        // employees.push(eEngineer)
-        console.log(eEngineer)
+        let employee = new Engineer(engineerResponse.name, engineerResponse.id, engineerResponse.email, engineerResponse.github)
+        teamMembers.push(employee)
+        console.log(teamMembers)
 
         // prompt for next employee
         nextEmployee()
@@ -128,15 +134,14 @@ const addIntern = () => {
         }
     ]).then(internResponse => {
         // add new intern to employees array
-        let eIntern = new Intern(internResponse.name, internResponse.id, internResponse.email, internResponse.school)
-        console.log(eIntern)
+        let employee = new Intern(internResponse.name, internResponse.id, internResponse.email, internResponse.school)
+        teamMembers.push(employee)
+        console.log(teamMembers)
 
         // prompt for next employee
         nextEmployee()
     })
 }
-
-const employees = []
 
 // function pushEmployees(managerResponse, engineerResponse, internResponse) {
 //     employees.push(eManager)
@@ -146,5 +151,5 @@ const employees = []
 // }
 
 const buildPage = () => {
-    render(myArrayOfTeamMembers)
+    generateTeam(teamMembers)
 }
