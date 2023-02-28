@@ -8,12 +8,13 @@ const fs = require("fs");
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-const render = require("./src/page-template.js");
+const render = require("./src/page-template");
 
 
 // Write Code to gather information about the development team members, and render the HTML file.
 // Pseudo-Code from Module 12 Office Hours with Dan. 
 
+//array of team members to hold objects of employees when pushed
 const teamMembers = []
 
 
@@ -48,6 +49,7 @@ inquirer.prompt([{
     nextEmployee()
 })
 
+
 const nextEmployee = () => {
     inquirer.prompt([{
         // choice of 3
@@ -70,10 +72,11 @@ const nextEmployee = () => {
             // render()
             console.log(teamMembers)
             console.log("finished")
-            // buildPage()
+            buildPage()
         }
     })
 }
+
 
 const addEngineer = () => {
     inquirer.prompt([
@@ -109,6 +112,7 @@ const addEngineer = () => {
     })
 }
 
+
 const addIntern = () => {
     inquirer.prompt([
         //intern questions 
@@ -143,13 +147,9 @@ const addIntern = () => {
     })
 }
 
-// function pushEmployees(managerResponse, engineerResponse, internResponse) {
-//     employees.push(eManager)
-//     employees.push(eEngineer)
-//     employees.push(eIntern)
-//     console.log(employees)
-// }
 
 const buildPage = () => {
-    generateTeam(teamMembers)
+    let htmlContent = render(teamMembers)
+    fs.writeFileSync('./output/team.html', htmlContent)
+    console.log(htmlContent)
 }
